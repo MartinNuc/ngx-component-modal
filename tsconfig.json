@@ -15,6 +15,14 @@
     "lib": [
       "es2017",
       "dom"
-    ]
+    ],
+    "paths": {
+      "ngx-component-modal-lib": [
+        "dist/ngx-component-modal-lib"
+      ],
+      "ngx-component-modal-lib/*": [
+        "dist/ngx-component-modal-lib/*"
+      ]
+    }
   }
 }

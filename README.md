@@ -1,27 +1,80 @@
 # NgxComponentModal
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.7.
+This is a library to display modal window using dynamic component. It is heavily inspired by great article [https://blog.thoughtram.io/angular/2017/11/20/custom-overlays-with-angulars-cdk.html](https://blog.thoughtram.io/angular/2017/11/20/custom-overlays-with-angulars-cdk.html).
 
-## Development server
+## Demo
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+TBD
 
-## Code scaffolding
+## How to use
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+1. install from npm
 
-## Build
+    ```bash
+    npm install ngx-component-modal
+    ```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+1. import the module
 
-## Running unit tests
+    ```javascript
+      imports: [
+        BrowserModule,
+        NgxComponentModalModule
+      ],
+    ```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+1. define your modal component as entry component (because Angular has no way to know about it)
 
-## Running end-to-end tests
+    ```javascript
+      entryComponents: [
+        SampleModalComponent
+      ],
+    ```
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+1. add cdk overlay styles to your `styles.scss` (not necessary if you use [@angular/material](https://material.angular.io/))
 
-## Further help
+    ```scss
+    @import '~@angular/cdk/_overlay';
+    @include cdk-overlay();
+    ```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+1. create component for your modal
+
+    ``` typescript
+    import { MODAL_CONTEXT } from 'ngx-component-modal/src/public_api';
+    import { NgxModalRef } from 'ngx-component-modal/src/lib/ngx-component-modal-ref';
+
+    export class SampleModalComponent {
+
+      constructor(public modalRef: NgxModalRef<boolean>, @Inject(MODAL_CONTEXT) public context: any) {
+        console.log(context); // see next step how to get data in here
+      }
+
+      dismiss() {
+        this.modalRef.dismiss();
+      }
+
+      close() {
+        this.modalRef.resolve(true); // this closes modal and passes `true` to the opener
+      }
+    }
+    ```
+
+1. open modal using `NgxComponentModalService` service. First argument is the component. Second argument is context through which you can inject some data into your modal component (see previous point).
+
+    ```typescript
+    export class AppComponent {
+      constructor(private ngxComponentModal: NgxComponentModalService) {}
+
+      openModal() {
+        const modalRef = this.ngxComponentModal.open<boolean>(SampleModalComponent, {
+          message: 'Hello',
+          yesButton: 'Yes',
+          noButton: 'No'
+        });
+        modalRef.result.subscribe(val => console.log(val), () => console.log('dismissed'));
+      }
+    }
+    ```
+
+    The result of `open()` is reference for modal. You can close the modal anytime using `modalRef.dismiss()`. The `result` is an observable which will emit just once when the modal is closed using `modalRef.resolve()`. It throws an error when modal is dismissed.
