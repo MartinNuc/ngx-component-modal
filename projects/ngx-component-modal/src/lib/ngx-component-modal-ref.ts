@@ -1,5 +1,5 @@
 import { OverlayRef } from '@angular/cdk/overlay';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 
 export class NgxModalRef<T> {
 
@@ -7,7 +7,7 @@ export class NgxModalRef<T> {
 
   constructor(private overlayRef: OverlayRef) {}
 
-  get result() {
+  get result(): Observable<T> {
     return this._result.asObservable();
   }
 
