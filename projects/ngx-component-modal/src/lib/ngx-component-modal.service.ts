@@ -27,7 +27,7 @@ export class NgxComponentModalService {
 
   constructor(protected overlay: Overlay, protected injector: Injector) { }
 
-  open<T>(component: ComponentType<any>, context?: object, options?: OverlayConfig): NgxModalRef<T> {
+  open<T>(component: ComponentType<any>, context?: object, options?: OverlayConfig, customInjector: Injector): NgxModalRef<T> {
     const overlayConfig = this.buildOverlayConfig(options);
     const overlayRef = this.overlay.create(overlayConfig);
 
@@ -36,7 +36,7 @@ export class NgxComponentModalService {
     const injectorTokens = new WeakMap();
     injectorTokens.set(MODAL_CONTEXT, context);
     injectorTokens.set(NgxModalRef, modalRef);
-    const portalInjector = new PortalInjector(this.injector, injectorTokens);
+    const portalInjector = new PortalInjector(customInjector || this.injector, injectorTokens);
 
     const componentPortal = new ComponentPortal(component, null, portalInjector);
     overlayRef.attach(componentPortal);

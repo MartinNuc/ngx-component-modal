@@ -78,3 +78,15 @@ This is a library to display modal window using dynamic component. It is heavily
     ```
 
     The result of `open()` is reference for modal. You can close the modal anytime using `modalRef.dismiss()`. The `result` is an observable which will emit just once when the modal is closed using `modalRef.resolve()`. It throws an error when modal is dismissed.
+
+## Using in lazy loaded image
+
+When the modal component is defined in lazy loaded image in `entryComponent` you have to pass module's injector when opening the service otherwise NgxComponentModal will see only components declared in it the same module.
+
+```
+export class AppComponent {
+  constructor(private ngxComponentModal: NgxComponentModalService, injector: Injector) {
+    this.ngxComponentModal.open<boolean>(SampleModalComponent, null, null, injector);
+  }
+}
+```
