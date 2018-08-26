@@ -4,7 +4,7 @@ This is a library to display modal window using dynamic component. It is heavily
 
 ## Demo
 
-[Stackblitz](https://stackblitz.com/edit/angular-s4pwxs)
+[Using modal in Guard (Stackblitz)](https://stackblitz.com/edit/angular-s4pwxs)
 
 ## How to use
 
