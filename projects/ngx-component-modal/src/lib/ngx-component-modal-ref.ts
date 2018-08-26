@@ -5,7 +5,7 @@ export class NgxModalRef<T> {
 
   protected _result = new Subject<T>();
 
-  constructor(protected overlayRef: OverlayRef) {}
+  constructor(public overlayRef: OverlayRef) {}
 
   get result(): Observable<T> {
     return this._result.asObservable();
