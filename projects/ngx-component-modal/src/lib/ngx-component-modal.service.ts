@@ -27,7 +27,7 @@ export class NgxComponentModalService {
 
   constructor(protected overlay: Overlay, protected injector: Injector) { }
 
-  open<T>(component: ComponentType<any>, context?: object, options?: OverlayConfig, customInjector: Injector): NgxModalRef<T> {
+  open<T>(component: ComponentType<any>, context?: object, options?: OverlayConfig, customInjector?: Injector): NgxModalRef<T> {
     const overlayConfig = this.buildOverlayConfig(options);
     const overlayRef = this.overlay.create(overlayConfig);
 
