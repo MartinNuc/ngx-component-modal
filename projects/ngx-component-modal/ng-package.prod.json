@@ -3,5 +3,8 @@
   "dest": "../../dist/ngx-component-modal",
   "lib": {
     "entryFile": "src/public_api.ts"
-  }
+  },
+  "whitelistedNonPeerDependencies": [
+    "@angular/cdk"
+  ]
 }

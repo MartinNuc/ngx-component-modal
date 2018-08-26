@@ -11,7 +11,7 @@ This is a library to display modal window using dynamic component. It is heavily
 1. install from npm
 
     ```bash
-    npm install ngx-component-modal @angular/cdk
+    npm install ngx-component-modal
     ```
 
 1. import the module
@@ -90,3 +90,7 @@ export class AppComponent {
   }
 }
 ```
+
+## Development
+
+`yarn build`
