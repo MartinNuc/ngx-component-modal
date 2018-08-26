@@ -4,14 +4,14 @@ This is a library to display modal window using dynamic component. It is heavily
 
 ## Demo
 
-TBD
+[Stackblitz](https://stackblitz.com/edit/angular-s4pwxs)
 
 ## How to use
 
 1. install from npm
 
     ```bash
-    npm install ngx-component-modal
+    npm install ngx-component-modal @angular/cdk
     ```
 
 1. import the module
@@ -40,7 +40,7 @@ TBD
 
 1. create component for your modal
 
-    ``` typescript
+    ```typescript
     import { MODAL_CONTEXT } from 'ngx-component-modal/src/public_api';
     import { NgxModalRef } from 'ngx-component-modal/src/lib/ngx-component-modal-ref';
 
@@ -51,11 +51,11 @@ TBD
       }
 
       dismiss() {
-        this.modalRef.dismiss();
+        this.modalRef.dismiss(); // this emits an error
       }
 
       close() {
-        this.modalRef.resolve(true); // this closes modal and passes `true` to the opener
+        this.modalRef.resolve(true); // this closes modal and emits `true` to the opener
       }
     }
     ```
