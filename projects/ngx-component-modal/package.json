@@ -1,8 +1,8 @@
 {
   "name": "ngx-component-modal",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "dependencies": {
-    "@angular/cdk": "^6.0.0-rc.0 || ^6.0.0"
+    "@angular/cdk": "^7.0.0-rc.0 || ^7.0.0"
   },
   "peerDependencies": {
     "@angular/common": "^6.0.0-rc.0 || ^6.0.0",

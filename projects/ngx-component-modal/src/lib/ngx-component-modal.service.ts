@@ -1,4 +1,4 @@
-import { Injectable, Component, Injector, InjectionToken } from '@angular/core';
+import { Injectable, Component, Injector, InjectionToken, ComponentFactoryResolver } from '@angular/core';
 import { ComponentType, Overlay, OverlayConfig } from '@angular/cdk/overlay';
 import { ComponentPortal, PortalInjector } from '@angular/cdk/portal';
 import { NgxModalRef } from './ngx-component-modal-ref';
@@ -9,21 +9,6 @@ export const MODAL_CONTEXT = new InjectionToken<any>('NGX_COMPONENT_MODAL_CONTEX
   providedIn: 'root'
 })
 export class NgxComponentModalService {
-  buildOverlayConfig(options: OverlayConfig): any {
-    const positionStrategy = this.overlay.position()
-      .global()
-      .centerHorizontally()
-      .centerVertically();
-
-    const overlayConfig = new OverlayConfig({
-      scrollStrategy: this.overlay.scrollStrategies.block(),
-      hasBackdrop: true,
-      positionStrategy,
-      ...options
-    });
-
-    return overlayConfig;
-  }
 
   constructor(protected overlay: Overlay, protected injector: Injector) { }
 
@@ -38,8 +23,25 @@ export class NgxComponentModalService {
     injectorTokens.set(NgxModalRef, modalRef);
     const portalInjector = new PortalInjector(customInjector || this.injector, injectorTokens);
 
-    const componentPortal = new ComponentPortal(component, null, portalInjector);
+    const componentFactoryResolver = customInjector && customInjector.get(ComponentFactoryResolver);
+    const componentPortal = new ComponentPortal(component, null, portalInjector, componentFactoryResolver);
     overlayRef.attach(componentPortal);
     return modalRef;
+  }
+
+  buildOverlayConfig(options: OverlayConfig): any {
+    const positionStrategy = this.overlay.position()
+      .global()
+      .centerHorizontally()
+      .centerVertically();
+
+    const overlayConfig = new OverlayConfig({
+      scrollStrategy: this.overlay.scrollStrategies.block(),
+      hasBackdrop: true,
+      positionStrategy,
+      ...options
+    });
+
+    return overlayConfig;
   }
 }
